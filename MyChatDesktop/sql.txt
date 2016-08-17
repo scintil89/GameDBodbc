@@ -1,0 +1,153 @@
+use mydb;
+
+
+
+show tables;
+
+
+
+desc users;
+
+
+
+
+insert into users values(1, 'a', '11');
+
+
+
+insert into users(UserID, PassWord) values('bb', '22');
+
+
+
+select * from users;
+
+
+
+select UserID from users where UserID = 'TEST1' and PassWord = '123123';
+
+
+
+ALTER TABLE users MODIFY UserID varchar(40) NOT NULL unique;
+
+create procedure checkuser( );
+
+
+
+
+select UID from users where UserID = 'TEST1' and PassWord = '123123' ;
+
+
+
+SELECT UserID from users where UserID = 'TEST1' and PassWord = '123123';
+
+
+
+
+
+
+
+
+
+
+DELIMITER //
+	
+DROP PROCEDURE IF EXISTS CREATEUSER//
+	
+CREATE PROCEDURE CREATEUSER(pUserID VARCHAR(40), pPassWord VARCHAR(40))
+		
+begin
+		
+INSERT INTO USERS(UserID, PassWord) VALUES(pUserID, pPassWord);
+        
+end//
+
+DELIMITER ;
+
+
+
+CALL CREATEUSER('asdf', 'asdf');
+
+
+
+
+
+
+
+
+DELIMITER //
+	
+DROP PROCEDURE IF EXISTS CHECKUSER//
+	
+CREATE PROCEDURE CHECKUSER(pUserID VARCHAR(40), pPassWord VARCHAR(40), OUT output int)
+		
+begin
+		
+/*IF EXISTS (SELECT UID from users where UserID = pUserID and PassWord = pPassWord) THEN
+			
+SELECT 1;
+		
+ELSE
+			
+SELECT -1;
+		
+end if;*/
+        
+SELECT UID  into output from users where UserID = pUserID and PassWord = pPassWord ;
+        
+end//
+DELIMITER ;
+
+
+
+call CHECKUSER('a', '111');
+
+
+
+
+
+
+select * from users;
+
+
+
+
+
+DELIMITER //
+	
+DROP PROCEDURE IF EXISTS DELETEUSER//
+	
+CREATE PROCEDURE DELETEUSER(pUserID VARCHAR(40), pPassWord VARCHAR(40))
+		
+begin
+		
+DELETE from users where UserID = pUserID and PassWord = pPassWord;
+        
+end//
+
+DELIMITER ;
+
+
+
+
+call DELETEUSER('1', '1');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
